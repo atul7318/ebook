@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant eBook Experience</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="ebook.css">
+
+</head>
+
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="book-header d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center">
+                <button class="header-control me-2" id="toggleSidebar" title="Toggle Sidebar">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+                <h1 class="fs-4 m-0 d-none d-sm-block">NoventiQ eBook</h1>
+            </div>
+            <div class="d-flex align-items-center">
+                <button class="header-control mx-1" id="searchToggle" title="Search">
+                    <i class="bi bi-search"></i>
+                </button>
+                <button class="header-control mx-1" id="bookmarksBtn" title="Bookmarks">
+                    <i class="bi bi-bookmark"></i>
+                </button>
+                <button class="header-control mx-1" id="notesBtn" title="Notes">
+                    <i class="bi bi-journal-text"></i>
+                </button>
+                <button class="header-control mx-1" id="downloadBtn" title="Download">
+                    <i class="bi bi-download"></i>
+                </button>
+                <button class="header-control mx-1" id="shareBtn" title="Share">
+                    <i class="bi bi-share"></i>
+                </button>
+                <button class="header-control ms-1" id="themeSwitcher" title="Toggle Dark Mode">
+                    <i class="bi bi-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Container -->
+    <div class="search-container" id="searchContainer">
+        <div class="container">
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search in book...">
+                <button class="btn btn-outline-secondary" type="button" id="closeSearch">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Container -->
+    <div class="book-container">
+        <!-- Sidebar -->
+        <aside class="book-sidebar" id="sidebar">
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" data-tab="table-of-contents">Contents</button>
+                <button class="sidebar-tab" data-tab="bookmarks">Bookmarks</button>
+                <button class="sidebar-tab" data-tab="notes">Notes</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="table-of-contents" class="tab-content active">
+                <ul class="toc-list">
+                    <li class="toc-item">
+                        <a href="#chapter1" class="toc-link active">
+                            <span class="chapter-badge">1</span>
+                            <span>Introduction to eBooks</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#chapter2" class="toc-link">
+                            <span class="chapter-badge">2</span>
+                            <span>Responsive Design</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#chapter3" class="toc-link">
+                            <span class="chapter-badge">3</span>
+                            <span>Navigation Methods</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#chapter4" class="toc-link">
+                            <span class="chapter-badge">4</span>
+                            <span>Search & Discovery</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#chapter5" class="toc-link">
+                            <span class="chapter-badge">5</span>
+                            <span>Accessibility Features</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div id="bookmarks" class="tab-content">
+                <div id="emptyBookmarks" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="bi bi-bookmark"></i>
+                    </div>
+                    <h5>No bookmarks yet</h5>
+                    <p class="text-muted">Save your favorite pages for quick access</p>
+                </div>
+                <div id="bookmarksList"></div>
+            </div>
+
+            <div id="notes" class="tab-content">
+                <div id="emptyNotes" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <h5>No notes yet</h5>
+                    <p class="text-muted">Select text and add notes as you read</p>
+                </div>
+                <div id="notesList"></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="book-content">
+            <div class="content-wrapper">
+                <!-- Chapter 1 -->
+                <section id="chapter1" class="chapter">
+                    <div class="chapter-number">1</div>
+                    <div class="chapter-heading">
+                        <h2 class="display-title fade-in">The Art of Digital Reading</h2>
+                        <p class="chapter-intro fade-in delay-100">A journey through modern interactive eBook
+                            experiences</p>
+
+                        <!-- Page Actions -->
+                        <div class="position-absolute top-0 end-0 d-flex mt-2">
+                            <button class="btn btn-outline-primary btn-sm rounded-circle me-2" id="bookmarkPage1"
+                                title="Bookmark this page">
+                                <i class="bi bi-bookmark"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm rounded-circle" id="notePage1"
+                                title="Add note to this page">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-content">
+                        <p class="lead-text slide-up delay-200">
+                            Welcome to a new dimension of reading—where traditional storytelling meets digital
+                            innovation.
+                            Interactive eBooks transform the way we consume knowledge by enhancing text with responsive
+                            design,
+                            intuitive navigation, and personalized features that adapt to your unique reading style.
+                        </p>
+
+                        <p class="slide-up delay-300">
+                            Unlike their static predecessors, modern eBooks respond to your interactions,
+                            remembering your preferences and allowing for deep customization. This guide explores
+                            the elegant features that make digital reading both practical and pleasurable across all
+                            your devices.
+                        </p>
+
+                        <div class="quote-block slide-up delay-400">
+                            "The future of reading is not about abandoning the intimacy of books, but enhancing it
+                            through
+                            thoughtful digital design that respects both content and reader."
+                        </div>
+
+                        <h3 class="slide-up delay-500">Why Interactive eBooks Matter</h3>
+
+                        <p>
+                            Traditional books offer a linear path through content. Interactive eBooks, by contrast,
+                            present information in layers that can be explored according to your interest and need:
+                        </p>
+
+                        <ul>
+                            <li>Fluid layouts that adapt to any screen size and orientation</li>
+                            <li>Intuitive navigation allowing both linear and non-linear reading</li>
+                            <li>Immediate access to definitions, references, and related concepts</li>
+                            <li>Personalization features including bookmarks, highlights, and notes</li>
+                            <li>Accessibility options for readers with different needs</li>
+                        </ul>
+
+                        <div class="row row-cols-1 row-cols-md-2 g-4 my-4">
+                            <div class="col fade-in delay-200">
+                                <div class="feature-card h-100">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <h5>Responsive Design</h5>
+                                    <p class="mb-0">Content that adapts beautifully to any device while maintaining
+                                        readability</p>
+                                </div>
+                            </div>
+
+                            <div class="col fade-in delay-300">
+                                <div class="feature-card h-100">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-compass"></i>
+                                    </div>
+                                    <h5>Intuitive Navigation</h5>
+                                    <p class="mb-0">Elegant movement between chapters, sections, and referenced
+                                        materials</p>
+                                </div>
+                            </div>
+
+                            <div class="col fade-in delay-400">
+                                <div class="feature-card h-100">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-lightbulb"></i>
+                                    </div>
+                                    <h5>Smart Annotations</h5>
+                                    <p class="mb-0">Create and organize your thoughts directly within the reading
+                                        experience</p>
+                                </div>
+                            </div>
+
+                            <div class="col fade-in delay-500">
+                                <div class="feature-card h-100">
+                                    <div class="feature-icon">
+                                        <i class="bi bi-palette"></i>
+                                    </div>
+                                    <h5>Visual Customization</h5>
+                                    <p class="mb-0">Personalize your reading environment to suit your preferences</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>
+                            The following chapters will guide you through each of these features, demonstrating how they
+                            work together to create a cohesive and enjoyable reading experience. Use the table of
+                            contents
+                            to explore topics in any order, or continue reading sequentially to discover each aspect of
+                            modern eBook design.
+                        </p>
+
+                        <div class="voice-controls slide-up delay-600">
+                            <div class="d-flex align-items-center">
+                                <h5 class="mb-0 me-3">
+                                    <i class="bi bi-volume-up me-2"></i> Voice Narration
+                                </h5>
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-primary voice-btn me-2" id="playVoice"
+                                        title="Play narration">
+                                        <i class="bi bi-play-fill"></i>
+                                    </button>
+                                    <button class="btn btn-secondary voice-btn me-2" id="pauseVoice"
+                                        title="Pause narration">
+                                        <i class="bi bi-pause-fill"></i>
+                                    </button>
+                                    <button class="btn btn-secondary voice-btn me-3" id="stopVoice"
+                                        title="Stop narration">
+                                        <i class="bi bi-stop-fill"></i>
+                                    </button>
+                                    <div class="d-flex align-items-center ms-2">
+                                        <label for="voiceSpeed" class="me-2 mb-0">Speed:</label>
+                                        <select id="voiceSpeed" class="form-select form-select-sm" style="width: 80px;">
+                                            <option value="0.8">0.8x</option>
+                                            <option value="1" selected>1.0x</option>
+                                            <option value="1.2">1.2x</option>
+                                            <option value="1.5">1.5x</option>
+                                            <option value="2">2.0x</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chapter 2 -->
+                <section id="chapter2" class="chapter">
+                    <div class="chapter-number">2</div>
+                    <div class="chapter-heading">
+                        <h2 class="display-title">Responsive Design Excellence</h2>
+                        <p class="chapter-intro">Crafting reading experiences that adapt to any device</p>
+
+                        <!-- Page Actions -->
+                        <div class="position-absolute top-0 end-0 d-flex mt-2">
+                            <button class="btn btn-outline-primary btn-sm rounded-circle me-2" id="bookmarkPage2"
+                                title="Bookmark this page">
+                                <i class="bi bi-bookmark"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm rounded-circle" id="notePage2"
+                                title="Add note to this page">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-content">
+                        <p class="lead-text">
+                            Responsive design forms the foundation of the modern eBook experience. Unlike print books
+                            with fixed dimensions, digital reading material must gracefully adapt to screens of all
+                            sizes—from
+                            large desktop monitors to compact smartphones.
+                        </p>
+
+                        <h3>Principles of Responsive eBook Design</h3>
+
+                        <p>
+                            The most elegant eBooks implement these responsive design principles to ensure readability
+                            and usability across all devices:
+                        </p>
+
+                        <div class="row row-cols-1 row-cols-md-2 g-4 my-4">
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-layout-text-window-reverse text-primary me-2"></i> Fluid
+                                        Typography</h5>
+                                    <p class="mb-0">Text size adjusts proportionally to screen dimensions while
+                                        maintaining optimal
+                                        line length (around 60-75 characters) for maximum readability.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-aspect-ratio text-primary me-2"></i> Flexible Layouts</h5>
+                                    <p class="mb-0">Content containers resize dynamically, using relative units rather
+                                        than
+                                        fixed pixel values to maintain visual harmony at any scale.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-image text-primary me-2"></i> Adaptable Visuals</h5>
+                                    <p class="mb-0">Images and multimedia elements scale proportionally, maintaining
+                                        their
+                                        visual integrity while adapting to available space.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-hand-index-thumb text-primary me-2"></i> Touch-Optimized
+                                        Controls</h5>
+                                    <p class="mb-0">Interactive elements adjust their size and spacing to accommodate
+                                        both precise cursor inputs and touch gestures.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quote-block">
+                            "The measure of good responsive design is not merely that content fits on any screen,
+                            but that it creates an equally satisfying experience regardless of device."
+                        </div>
+
+                        <p>
+                            This eBook you're reading now demonstrates these principles in action. Try adjusting your
+                            browser window size or view it on different devices to observe how text, images, and
+                            navigation
+                            elements reflow and resize while maintaining their readability and functionality.
+                        </p>
+
+                        <div class="card border-primary-subtle bg-light my-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-info-circle text-primary me-2"></i> Device
+                                    Adaptation</h5>
+                                <p class="card-text">
+                                    Notice how this eBook's layout changes across different devices:
+                                </p>
+                                <ul class="mb-0">
+                                    <li><strong>Desktop:</strong> Sidebar is persistently visible; optimal typography
+                                        with precise navigation</li>
+                                    <li><strong>Tablet:</strong> Collapsible sidebar with touch-friendly controls;
+                                        adjusted typography for comfort</li>
+                                    <li><strong>Mobile:</strong> Full-screen reading with accessible off-canvas
+                                        navigation; larger touch targets</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Implementation Excellence</h3>
+
+                        <p>
+                            Beyond technical implementation, truly exceptional responsive design in eBooks considers the
+                            context of use on each device:
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>Reading Patterns:</strong> Desktop users often skim or reference, while mobile
+                                readers
+                                typically engage in focused, linear reading.
+                            </li>
+                            <li>
+                                <strong>Environmental Factors:</strong> Mobile reading often occurs in variable lighting
+                                and
+                                potentially distracting environments.
+                            </li>
+                            <li>
+                                <strong>Session Duration:</strong> Reading sessions on smaller devices tend to be
+                                shorter but
+                                more frequent.
+                            </li>
+                            <li>
+                                <strong>Input Mechanisms:</strong> Different devices use different input methods, from
+                                precise
+                                mouse clicks to multi-touch gestures.
+                            </li>
+                        </ul>
+
+                        <p>
+                            By accounting for these factors, responsive eBook design creates a seamless continuum of
+                            experience
+                            across all devices, allowing readers to transition between different contexts without losing
+                            their
+                            place or needing to relearn navigation patterns.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Chapter 3 -->
+                <section id="chapter3" class="chapter">
+                    <div class="chapter-number">3</div>
+                    <div class="chapter-heading">
+                        <h2 class="display-title">Intuitive Navigation Systems</h2>
+                        <p class="chapter-intro">Moving through content with elegance and purpose</p>
+
+                        <!-- Page Actions -->
+                        <div class="position-absolute top-0 end-0 d-flex mt-2">
+                            <button class="btn btn-outline-primary btn-sm rounded-circle me-2" id="bookmarkPage3"
+                                title="Bookmark this page">
+                                <i class="bi bi-bookmark"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm rounded-circle" id="notePage3"
+                                title="Add note to this page">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-content">
+                        <p class="lead-text">
+                            Navigation is the silent architecture of the reading experience. When designed thoughtfully,
+                            it fades into the background, allowing readers to move through content with intuitive ease
+                            while
+                            maintaining their sense of location and progress.
+                        </p>
+
+                        <h3>Hierarchical Table of Contents</h3>
+
+                        <p>
+                            The table of contents serves as both map and compass for readers, providing:
+                        </p>
+
+                        <ul>
+                            <li><strong>Structural Overview:</strong> Reveals the organization and scope of content</li>
+                            <li><strong>Direct Access:</strong> Enables immediate navigation to specific sections</li>
+                            <li><strong>Progress Awareness:</strong> Indicates the reader's current position</li>
+                            <li><strong>Content Relationships:</strong> Shows how sections relate to each other</li>
+                        </ul>
+
+                        <p>
+                            In this eBook, the table of contents is always accessible through the sidebar, allowing
+                            you to jump between chapters without losing your sense of the overall structure. The current
+                            chapter is highlighted to provide context for your reading.
+                        </p>
+
+                        <div class="card bg-light my-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Try It Now</h5>
+                                <p class="card-text mb-0">
+                                    Open the sidebar by clicking the menu icon in the header, then click on any chapter
+                                    title to jump directly to that section. Notice how the active chapter is
+                                    highlighted,
+                                    helping you maintain awareness of your position in the book.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3>Sequential Navigation</h3>
+
+                        <p>
+                            While non-linear navigation supports reference and exploration, sequential page-turning
+                            remains
+                            essential for immersive reading. The navigation controls at the bottom of the screen
+                            provide:
+                        </p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="feature-card h-100 text-center">
+                                    <i class="bi bi-arrow-left-right fs-2 text-primary mb-2"></i>
+                                    <h5>Directional Movement</h5>
+                                    <p class="mb-0 small">Forward and backward progression through chapters</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="feature-card h-100 text-center">
+                                    <i class="bi bi-geo-alt fs-2 text-primary mb-2"></i>
+                                    <h5>Location Awareness</h5>
+                                    <p class="mb-0 small">Current position feedback through page indicators</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="feature-card h-100 text-center">
+                                    <i class="bi bi-keyboard fs-2 text-primary mb-2"></i>
+                                    <h5>Keyboard Support</h5>
+                                    <p class="mb-0 small">Arrow key navigation for efficient reading</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quote-block">
+                            "The art of digital navigation lies in creating systems that feel so natural,
+                            readers forget they're navigating at all."
+                        </div>
+
+                        <h3>Visual Progress Indicators</h3>
+
+                        <p>
+                            Unlike physical books, where progress is physically evident, digital books require explicit
+                            progress indicators to orient readers. This eBook provides several:
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>Progress Bar:</strong> The thin line at the top of the page fills from left to
+                                right,
+                                indicating overall reading progress
+                            </li>
+                            <li>
+                                <strong>Page Counter:</strong> Shows current page and total pages in the navigation
+                                controls
+                            </li>
+                            <li>
+                                <strong>Chapter Numbers:</strong> Large, visually distinctive numbers identify each
+                                chapter
+                            </li>
+                            <li>
+                                <strong>TOC Highlighting:</strong> Your current location is emphasized in the table of
+                                contents
+                            </li>
+                        </ul>
+
+                        <p>
+                            These complementary indicators work together to maintain your sense of place, supporting
+                            both
+                            linear reading and non-linear exploration without disorientation.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Chapter 4 -->
+                <section id="chapter4" class="chapter">
+                    <div class="chapter-number">4</div>
+                    <div class="chapter-heading">
+                        <h2 class="display-title">Search & Discovery Tools</h2>
+                        <p class="chapter-intro">Finding precisely what you need within content</p>
+
+                        <!-- Page Actions -->
+                        <div class="position-absolute top-0 end-0 d-flex mt-2">
+                            <button class="btn btn-outline-primary btn-sm rounded-circle me-2" id="bookmarkPage4"
+                                title="Bookmark this page">
+                                <i class="bi bi-bookmark"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm rounded-circle" id="notePage4"
+                                title="Add note to this page">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-content">
+                        <p class="lead-text">
+                            One of digital reading's greatest advantages is searchability—the ability to locate
+                            specific information instantly rather than manually scanning pages. Sophisticated eBooks
+                            transform this utility into an elegant discovery tool.
+                        </p>
+
+                        <h3>Intelligent Search Functionality</h3>
+
+                        <p>
+                            Modern eBook search goes beyond simple text matching to deliver truly useful results:
+                        </p>
+
+                        <div class="row row-cols-1 row-cols-md-2 g-4 my-4">
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-lightning-charge text-primary me-2"></i> Contextual Results</h5>
+                                    <p class="mb-0">Search results include surrounding text to help determine relevance
+                                        before navigating to the location.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-highlighter text-primary me-2"></i> Visual Highlighting</h5>
+                                    <p class="mb-0">Search terms are visually emphasized within content, making them
+                                        easy to identify when navigating to search results.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-filter-circle text-primary me-2"></i> Filtering Options</h5>
+                                    <p class="mb-0">Results can be filtered by chapter, relevance, or content type
+                                        to quickly narrow down to the most appropriate match.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-clock-history text-primary me-2"></i> Search History</h5>
+                                    <p class="mb-0">Previous searches are saved, allowing readers to revisit frequently
+                                        referenced content without repeating searches.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card bg-light my-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Try It Now</h5>
+                                <p class="card-text mb-0">
+                                    Click the search icon in the header or press <kbd>Ctrl</kbd>+<kbd>F</kbd>
+                                    (<kbd>⌘</kbd>+<kbd>F</kbd> on Mac) to open the search bar. Try searching for
+                                    terms like "design" or "navigation" to see how results are presented with context.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3>Bookmarking for Personalized Navigation</h3>
+
+                        <p>
+                            Bookmarks transform a generic text into a personalized reference tailored to individual
+                            interests and needs. Unlike physical bookmarks, digital versions offer several advantages:
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>Unlimited Markers:</strong> Add as many bookmarks as needed without physical
+                                constraints
+                            </li>
+                            <li>
+                                <strong>Custom Categorization:</strong> Organize bookmarks by topic, priority, or custom
+                                tags
+                            </li>
+                            <li>
+                                <strong>Instant Access:</strong> Jump directly to any bookmarked location from the
+                                bookmark panel
+                            </li>
+                            <li>
+                                <strong>Persistent Storage:</strong> Bookmarks remain across reading sessions and
+                                devices
+                            </li>
+                        </ul>
+
+                        <p>
+                            To bookmark any page in this eBook, simply click the bookmark icon in the upper right corner
+                            of the chapter. Your bookmarks will appear in the bookmarks tab of the sidebar, allowing
+                            quick
+                            access to your most important sections.
+                        </p>
+
+                        <div class="quote-block">
+                            "The power of digital reading lies not just in accessing content, but in creating
+                            personalized pathways through it that reflect your unique interests and needs."
+                        </div>
+
+                        <p>
+                            Together, search functionality and bookmarking create a powerful system for both discovery
+                            and re-discovery, allowing readers to build a lasting relationship with content that evolves
+                            over time.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Chapter 5: Accessibility -->
+                <section id="chapter5" class="chapter">
+                    <div class="chapter-number">5</div>
+                    <div class="chapter-heading">
+                        <h2 class="display-title">Accessibility & Inclusive Design</h2>
+                        <p class="chapter-intro">Creating reading experiences that work for everyone</p>
+
+                        <!-- Page Actions -->
+                        <div class="position-absolute top-0 end-0 d-flex mt-2">
+                            <button class="btn btn-outline-primary btn-sm rounded-circle me-2" id="bookmarkPage5"
+                                title="Bookmark this page">
+                                <i class="bi bi-bookmark"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm rounded-circle" id="notePage5"
+                                title="Add note to this page">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chapter-content">
+                        <p class="lead-text">
+                            True elegance in design includes everyone. Modern eBooks must be built with accessibility
+                            as a core principle, ensuring that all readers—regardless of ability or reading
+                            preference—can
+                            enjoy and benefit from the content.
+                        </p>
+
+                        <h3>Core Accessibility Features</h3>
+
+                        <p>
+                            This eBook implements numerous accessibility features that benefit all readers while
+                            being essential for those with specific needs:
+                        </p>
+
+                        <div class="row row-cols-1 row-cols-md-2 g-4 my-4">
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-type text-primary me-2"></i> Flexible Typography</h5>
+                                    <p class="mb-0">Adjustable font size, family, and line spacing ensures text remains
+                                        readable for those with visual impairments or reading difficulties.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-palette2 text-primary me-2"></i> Color Contrast</h5>
+                                    <p class="mb-0">Carefully selected color combinations meet WCAG standards for
+                                        contrast, ensuring text remains readable in both light and dark modes.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-volume-up text-primary me-2"></i> Text-to-Speech</h5>
+                                    <p class="mb-0">Integrated voice narration converts written content to audio,
+                                        benefiting those with visual impairments or reading challenges.</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="feature-card h-100">
+                                    <h5><i class="bi bi-keyboard text-primary me-2"></i> Keyboard Navigation</h5>
+                                    <p class="mb-0">Complete keyboard accessibility allows navigation without
+                                        reliance on mouse or touch inputs for motor-impaired readers.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quote-block">
+                            "Accessible design is good design. It benefits people who are disabled, but it also benefits
+                            everyone else.
+                            Accessibility is about creating reading experiences that actually work."
+                        </div>
+
+                        <h3>Assistive Technology Compatibility</h3>
+
+                        <p>
+                            Beyond built-in accessibility features, elegant eBooks should work seamlessly with
+                            external assistive technologies:
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>Screen Reader Compatibility:</strong> Properly structured semantic HTML ensures
+                                screen readers can accurately interpret and navigate content
+                            </li>
+                            <li>
+                                <strong>Alternative Text:</strong> All meaningful images include descriptive alternative
+                                text for screen reader users
+                            </li>
+                            <li>
+                                <strong>ARIA Attributes:</strong> Appropriate ARIA roles and landmarks enhance
+                                navigation and understanding of interactive elements
+                            </li>
+                            <li>
+                                <strong>Focus Management:</strong> Visible focus indicators help keyboard users
+                                track their position within the interface
+                            </li>
+                        </ul>
+
+                        <div class="card bg-light border-primary-subtle my-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-sliders text-primary me-2"></i> Accessibility
+                                    Panel</h5>
+                                <p class="card-text mb-3">
+                                    Try our comprehensive accessibility settings panel to customize your reading
+                                    experience:
+                                </p>
+                                <button class="btn btn-primary" id="accessibilitySettingsBtn">
+                                    <i class="bi bi-universal-access me-2"></i>Open Accessibility Settings
+                                </button>
+                            </div>
+                        </div>
+
+                        <h3>Inclusive Content Design</h3>
+
+                        <p>
+                            Accessibility extends beyond technical implementation to the content itself.
+                            This eBook follows these content accessibility principles:
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>Clear Language:</strong> Straightforward writing without unnecessary jargon
+                            </li>
+                            <li>
+                                <strong>Logical Structure:</strong> Well-organized content with meaningful headings and
+                                sections
+                            </li>
+                            <li>
+                                <strong>Multiple Content Formats:</strong> Information presented in various ways (text,
+                                diagrams, lists)
+                            </li>
+                            <li>
+                                <strong>Meaningful Link Text:</strong> Descriptive links that make sense out of context
+                            </li>
+                            <li>
+                                <strong>Captions and Transcripts:</strong> Text alternatives for audio and video content
+                            </li>
+                        </ul>
+
+                        <p>
+                            By incorporating these principles, this eBook creates a more inclusive reading experience
+                            that adapts to different needs and preferences, ensuring that elegance extends to everyone.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page Navigation -->
+    <div class="page-navigation">
+        <div class="d-flex align-items-center">
+            <button class="page-nav-btn" id="prevBtn" disabled>
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="page-indicator">
+                <span id="currentPageNum">1</span> / <span id="totalPages">5</span>
+            </div>
+            <button class="page-nav-btn" id="nextBtn">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ebookModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Modal Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Modal content will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="cancelModal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmModal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Selection Toolbar Template -->
+    <template id="selectionToolbarTemplate">
+        <div class="selection-toolbar position-absolute p-2 rounded shadow-sm"
+            style="z-index: 1050; background-color: var(--primary);">
+            <div class="d-flex">
+                <button class="btn btn-sm text-white border-0 me-1 highlight-btn">
+                    <i class="bi bi-highlighter me-1"></i> Highlight
+                </button>
+                <button class="btn btn-sm btn-light add-note-btn">
+                    <i class="bi bi-pencil me-1"></i> Add Note
+                </button>
+            </div>
+        </div>
+    </template>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="ebook.js"></script>
+
+</body>
+
+</html>
